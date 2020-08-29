@@ -1,0 +1,39 @@
+---
+#   https://docs.sonarqube.org/latest/requirements/requirements/
+- name: sysctl - vm.max_map_count
+  sysctl:
+     name: vm.max_map_count
+     value: '524288'
+     state: present
+
+- name: sysctl - fs.file-max
+  sysctl:
+     name: fs.file-max
+     value: '131072'
+     state: present
+
+- name: Add or modify nofile limits for wildcard domain
+  pam_limits:
+     domain: '*'
+     limit_type: '-'
+     limit_item: nofile
+     value: '131072'
+
+# requirements 8192 but now ( CentOS/8) 15656
+- name: Add or modify nproc limits for wildcard domain
+  pam_limits:
+     domain: '*'
+     limit_type: '-'
+     limit_item: nproc
+     value: '15656'
+
+- name: reload settings from all system configuration files
+  shell: sysctl --system
+
+- name: Install Fonts
+  yum:
+    name: 
+      - fontconfig 
+      - freetype
+    state: installed
+

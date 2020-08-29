@@ -1,0 +1,8 @@
+db:
+  schema:    sonardb
+  user:     sonar_user
+  password: "Passw0rd("
+    
+sonar:
+   os_user_name: "sonar"
+   os_user_password: "Passw0rd("
